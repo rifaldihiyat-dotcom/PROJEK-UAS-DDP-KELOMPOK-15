@@ -45,8 +45,36 @@ def show_beranda():
 
 #-- halaman cek BMI ---
 def show_halaman_bmi():
-    st.title("⚖️ Cek Status BMI")
+    st.title("⚖ Cek Status BMI (Body Mass Index)")
+    st.write("BMI adalah indikator sederhana untuk mengetahui apakah berat badanmu ideal.")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        berat = st.number_input("Masukkan Berat Badan (kg)", min_value=10.0, value=50.0)
+    with col2:
+        tinggi = st.number_input("Masukkan Tinggi Badan (cm)", min_value=50.0, value=160.0)
 
+    if st.button("Hitung BMI"):
+        # Rumus BMI: Berat / (Tinggi/100)^2
+        tinggi_m = tinggi / 100
+        bmi = berat / (tinggi_m ** 2)
+        
+        st.divider()
+        st.metric(label="Skor BMI Kamu", value=f"{bmi:.2f}")
+        
+        # Logika Kategori (Conditional If-Elif)
+        if bmi < 18.5:
+            st.warning("Kategori: *Kekurangan Berat Badan (Underweight)*")
+            st.write("Tips: Perbanyak asupan kalori dan protein sehat.")
+        elif 18.5 <= bmi < 24.9:
+            st.success("Kategori: *Normal (Ideal)*")
+            st.write("Tips: Pertahankan pola makan dan olahraga teratur!")
+        elif 25 <= bmi < 29.9:
+            st.warning("Kategori: *Kelebihan Berat Badan (Overweight)*")
+            st.write("Tips: Kurangi gula dan lemak, serta rutin berolahraga.")
+        else:
+            st.error("Kategori: *Obesitas*")
+            st.write("Tips: Segera konsultasikan dengan ahli gizi atau dokter.")
    
 
 #-- halaman hitung kalori ---
