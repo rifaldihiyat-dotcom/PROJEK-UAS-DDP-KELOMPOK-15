@@ -122,10 +122,26 @@ def show_halaman_kalori():
 
 #-- halaman cek air minum ---
 def show_halaman_air():
-    st.title("💧 Cek Kebutuhan Air Minum Harian")
-
+    st.title("💧 Cek Kebutuhan Air Minum")
+    st.write("Tubuh manusia membutuhkan air sekitar 30-40ml per kg berat badan.")
     
-
+    berat = st.number_input("Masukkan Berat Badanmu (kg)", 10.0, 200.0, 50.0)
+    
+    if st.button("Hitung Kebutuhan Air"):
+        # Rumus sederhana: Berat * 30ml
+        air_ml = berat * 30
+        air_liter = air_ml / 1000
+        
+        gelas = air_ml / 250 # Asumsi 1 gelas = 250ml
+        
+        st.divider()
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Volume Air", f"{air_liter:.1f} Liter")
+        with col2:
+            st.metric("Jumlah Gelas", f"{int(gelas)} Gelas")
+            
+        st.info(f"Disarankan minum minimal *{int(gelas)} gelas* (ukuran 250ml) sehari agar tidak dehidrasi.")
 #-- halaman cek waktu tidur ---
 def show_halaman_tidur():
     st.title("💤 Cek Waktu Tidur (Sleep Cycle)")
@@ -181,4 +197,6 @@ def main():
     elif pilihan == "4. 💤 Cek Waktu Tidur":
         show_halaman_tidur()
 
-
+if __name__ == "__main__":
+    main()
+        
